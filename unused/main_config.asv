@@ -1,0 +1,86 @@
+clear;clc;close all
+
+load('configuration.mat')
+n = config.n;
+LE_trails = config.trails;
+pts = config.pts;
+cons = config.cons;
+conDic = conDic(cons,n);
+
+% DEFINE CONTOUR SHAPE AND ITS CONVEXITY
+
+save('pts.mat', 'pts', 'n')
+xt = pts(1,:);
+xt = [xt xt(1)];
+yt = pts(2,:);
+yt = [yt yt(1)];
+global h
+h= waitbar(0, 'Please wait ...', 'Name', sprintf('%d-dispersion in progress',n));
+if ispolycw( pts(1,:),  pts(2,:))
+    xt = flip(xt);
+    yt = flip(yt);
+    %disp('flip')
+end
+convex = isConvex(xt,yt,length(xt)-1);
+s = length(xt)-1;
+shape = zeros(s,4);
+for i = 1:s
+    shape(i,:) = [xt(i) yt(i) xt(i+1) yt(i+1)];
+end
+ptsT = [pts'; pts(1,1) pts(1,2)];
+polygon_check = lineSegmentIntersect([ptsT(1:s,:) ptsT(2:s+1,:)],shape);
+if sum(polygon_check.intAdjacencyMatrix(:)) > 2*s+2
+    disp(polygon_check.intAdjacencyMatrix)
+    error('Shape not polygon: shape has intersecting edges.')
+end
+
+
+% INITIALIZE VARIABLES
+    %[xc,yc] = GetPointsInside(n, xt, yt);
+    max_xc = [];
+    max_yc = [];
+    isConvex = sum(convex) ==  s+1;
+    LE_r_store = zeros(1,LE_trails);
+    
+    D = parallel.pool.DataQueue;
+    global N p r_prev
+    N= LE_trails; p= 1; r_prev = 0;
+   
+    afterEach(D, @nUpdateWaitbar);
+    parfor i = 1:LE_trails
+        LE_store(i) = Loosing_expansion(xt,yt,n,isConvex, Cons);
+        maxr = (max(LE_store(i).r))
+        LE_r_store(i) = LE_store(i).r;
+        send(D, maxr);
+    end
+    
+    close(h)
+    [max_r,idx] = max(LE_r_store);
+    LE_r_store = sort(LE_r_store);
+    LE_max = LE_store(idx);
+    try_max = Loosing_expansion_go(xt, yt, LE_max, n, isConvex, cons, consDic);
+    if try_max.r > max_r
+        LE_max = try_max;
+    end
+%     save('LE_store.mat','LE_store', 'max_r', 'LE_r_store', 'n')
+%     save('LE_max.mat','LE_max')
+     clearvars LE_store
+    
+    load('max.mat')
+    max.r = [max.r max_r];
+    max.xc{end+1} = LE_max.xc;
+    max.yc{end+1} = LE_max.yc;
+    max.trails = [max.trails idx];
+    save('max.mat', 'max');
+    
+%     GeneratePlotsWithForce(n, xt, yt, LE_max.xc, LE_max.yc, LE_max.r, LE_max.Csum, cons);
+
+    
+    function nUpdateWaitbar(maxr)
+        global p N h r_prev
+        if r_prev < maxr
+            r_prev = maxr;
+        end
+        waitbar(p/N,h,sprintf('Iterations: %d/%d, current r_{max} = %5f',p, N, r_prev));
+        p = p + 1;
+    end
