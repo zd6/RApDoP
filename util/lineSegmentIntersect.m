@@ -93,17 +93,8 @@ denominator = Y4_Y3 .* X2_X1 - X4_X3 .* Y2_Y1;
 u_a = numerator_a ./ denominator;
 u_b = numerator_b ./ denominator;
 % Find the adjacency matrix A of intersecting lines.
-INT_X = X1+X2_X1.*u_a;
-INT_Y = Y1+Y2_Y1.*u_a;
 INT_B = (u_a >= 0) & (u_a <= 1) & (u_b >= 0) & (u_b <= 1);
-PAR_B = denominator == 0;
-COINC_B = (numerator_a == 0 & numerator_b == 0 & PAR_B);
 % Arrange output.
 out.intAdjacencyMatrix = INT_B;
-out.intMatrixX = INT_X .* INT_B;
-out.intMatrixY = INT_Y .* INT_B;
-out.intNormalizedDistance1To2 = u_a;
-out.intNormalizedDistance2To1 = u_b;
-out.parAdjacencyMatrix = PAR_B;
-out.coincAdjacencyMatrix= COINC_B;
+
 end
