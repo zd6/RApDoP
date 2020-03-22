@@ -65,7 +65,7 @@ else
                     perpendicular = pV1+(pV2-pV1)*dot(pC-pV1, pV2-pV1)/norm(pV2-pV1);
                     PB_connection = lineSegmentIntersect([pC(1:2) perpendicular(1:2)], shape);
                     CB(i,j) = norm(cross(pC-pV1,pV2-pV1))/norm(pV2-pV1);
-                    disp(sum(PB_connection.intAdjacencyMatrix))
+                    % disp(sum(PB_connection.intAdjacencyMatrix))
                     if sum(PB_connection.intAdjacencyMatrix) > 2
                         continue
                     end
