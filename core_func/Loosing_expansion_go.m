@@ -13,7 +13,7 @@ rep.muC = 10000*n;
 rep.muP = 10000*s;
 rep.s = s;
 % fprintf('previously r is: %d\n', prev_result.r)
-r_prev = -1*ones(1,10);
+r_prev = 0;
 maxRatio = min(max(10,ceil(n/s)^0.5), 20);
 ratio_list = [];
 for i = flip(1:maxRatio)
@@ -32,11 +32,9 @@ for ratio = ratio_list
     xc = LE_max.xc;
     yc = LE_max.yc;
     while i < ite
-        [r,CtCVec,CtBVec,CC,CB] = GetStateGeometry(xc,yc,xt,yt,n,s,isConvex,mean(r_prev), isempty(cons));
-        if r_prev(mod(i-1,10)+1) > r
-            stp = stp/(1.02);
-        end
-        r_prev(mod(i,10)+1) = r;
+        [r,CtCVec,CtBVec,CC,CB] = GetStateGeometry(xc,yc,xt,yt,n,s,isConvex,(r_prev), isempty(cons));
+
+        r_prev = r;
         Csum = GetRepulsionForce(n,CtCVec,CtBVec,CC,CB,r,rep);
 %         GeneratePlotsWithForce( n, xt , yt , xc , yc , r, Csum,cons)
         if n^3*var(r_prev) > r^2 && ite < 100*n
@@ -52,6 +50,7 @@ for ratio = ratio_list
             LE_max.Csum = Csum;
         end
         move = updateCircle(Csum,n ,r, stp);
+        % GeneratePlotsWithMove( n, xt , yt , xc , yc , r , move, cons)
         if ~isempty(cons)
             idx = cell2mat(consDic.keys());
             [~, forceRank] = sort(vecnorm(Csum(idx,:)'));

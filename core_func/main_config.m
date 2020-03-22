@@ -47,7 +47,7 @@ N= LE_trails + min(max(10,ceil(n/s)^0.5), 20)*2; p= 1; r_prev = 0;
 afterEach(D, @nUpdateWaitbar);
 
 % Loosing Expansion trails to get optimal circle placing
-parfor i = 1:LE_trails
+for i = 1:LE_trails
     LE_store(i) = Loosing_expansion(xt, yt, n, isConvex, cons, consDic);
     maxr = (max(LE_store(i).r));
     LE_r_store(i) = LE_store(i).r;
