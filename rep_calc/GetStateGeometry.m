@@ -9,12 +9,10 @@ for i = 1:n
     for j = 1:n
         if i ~= j
             CC(i,j) = norm([xc(i) - xc(j) yc(i) - yc(j)]);
-%             fprintf('%d %d\n', i, j)
-%             disp(sum(ismember([i,j], consIdx)))
-%             pause(1.0)
             if noCons && r_prev > 0 && CC(i,j) > r_prev*4% && sum(ismember([i,j], consIdx)) < 2
                 CC(i,j) = inf;
-                    continue
+                % fprintf('%d %d\n',i,j)
+                continue
             end
             if ~isConvex
                 CC_connection = lineSegmentIntersect([xc(i) yc(i) xc(j) yc(j)],shape);
@@ -64,7 +62,13 @@ else
                     end
                     CtBVec(i,j,:) = tmp(1:2)/norm(tmp);
                 case 2
+                    perpendicular = pV1+(pV2-pV1)*dot(pC-pV1, pV2-pV1)/norm(pV2-pV1);
+                    PB_connection = lineSegmentIntersect([pC(1:2) perpendicular(1:2)], shape);
                     CB(i,j) = norm(cross(pC-pV1,pV2-pV1))/norm(pV2-pV1);
+                    disp(sum(PB_connection.intAdjacencyMatrix))
+                    if sum(PB_connection.intAdjacencyMatrix) > 2
+                        continue
+                    end
                     c = [xt(j+1)-xt(j),yt(j+1)-yt(j)];
                     CtBVec(i,j,:) = [-c(2),c(1)]/norm(c);
                 case 3
