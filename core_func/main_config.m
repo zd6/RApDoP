@@ -43,11 +43,12 @@ D = parallel.pool.DataQueue;
 global h
 h= waitbar(0, 'Please wait ...', 'Name', sprintf('%d-dispersion in progress',n));
 global N p r_prev
-N= LE_trails + min(max(10,ceil(n/s)^0.5), 20)*2; p= 1; r_prev = 0;
+N= LE_trails + min(5, LE_trails);% min(max(10,ceil(n/s)^0.5), 20)*20;
+p = 1; r_prev = 0;
 afterEach(D, @nUpdateWaitbar);
 
 % Loosing Expansion trails to get optimal circle placing
-for i = 1:LE_trails
+parfor i = 1:LE_trails
     LE_store(i) = Loosing_expansion(xt, yt, n, isConvex, cons, consDic);
     maxr = (max(LE_store(i).r));
     LE_r_store(i) = LE_store(i).r;
@@ -55,14 +56,20 @@ for i = 1:LE_trails
 end
 
 
-[max_r,idx] = max(LE_r_store);
-% LE_r_store = sort(LE_r_store);
-LE_max = LE_store(idx);
+[~,sorted_idx] = sort(LE_r_store, 'descend');
+LE_max = LE_store(sorted_idx(1));
 
 % Further attempts to maximize radium by changing mu
-try_max = Loosing_expansion_go(xt, yt, LE_max, n, isConvex, cons, consDic);
-if try_max.r > max_r
-    LE_max = try_max;
+parfor i =  1:min(5, LE_trails)
+    max_idx = sorted_idx(i);
+    LE_max_tmp = LE_store(max_idx);
+    try_max(i) = Loosing_expansion_go(xt, yt, LE_max_tmp, n, isConvex, cons, consDic);
+    try_r(i) = try_max(i).r;
+    send(D, try_r(i));
+end
+[~,try_idx] = sort(try_r, 'descend');
+if try_r(try_idx(1)) > LE_max.r
+    LE_max = try_max(try_idx(1));
 end
 LE_max.xt = xt;
 LE_max.yt = yt;
@@ -73,8 +80,8 @@ load('max.mat', 'max_data')
 max_data.r = [max_data.r LE_max.r];
 max_data.xc{end+1} = LE_max.xc;
 max_data.yc{end+1} = LE_max.yc;
-max_data.trails = [max_data.trails idx];
-save('max.mat', 'max_data');    
+save('max.mat', 'max_data');
+p = 0;
 close(h)
 end 
    

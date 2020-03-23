@@ -86,7 +86,6 @@ for ratio = ratio_list
 
         i = i + 1;  
     end
-    nUpdateWaitbar(LE_max.r)
 %     fprintf('with above mus r is: %d\n', curmax)
 end
 % fprintf('after r is: %d\n', LE_max.r)

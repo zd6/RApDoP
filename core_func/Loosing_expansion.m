@@ -12,7 +12,6 @@ while ~checkCons(cons, xc, yc)% && tries < 100
         max.r = -1;
         max.xc = zeros(1,n);
         max.yc = zeros(1,n);
-        max.Csum = [];
         disp('failed to find possible initialization')
         return
     end
@@ -25,7 +24,6 @@ pause(0.0)
 max.r = -1;
 max.xc = xc;
 max.yc = yc;
-max.Csum = [];
 s = length(xt)-1;
 rep.threshod = 0.01;
 rep.muB = 10000*s;
@@ -49,7 +47,6 @@ while i < ite
         max.r = r;
         max.xc = xc;
         max.yc = yc;
-        max.Csum = Csum;
     end
     move = updateCircle(Csum,n ,r, stp);
     % GeneratePlotsWithMove( n, xt , yt , xc , yc , r , move, cons)
