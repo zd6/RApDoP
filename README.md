@@ -1,4 +1,4 @@
-# RApDoP
+# Operational Optimization research: RApDoP
 Repulsion-Based Applied p-dispersion with Distance-Constraints of non-/convex Polygon
 ### Authors: Zhengguan Dai(Gary), Kathleen Xu, Melkior Ornik
 #### requirement
