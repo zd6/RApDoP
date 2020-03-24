@@ -3,7 +3,7 @@ function LE_max = main_config(config)
 
 n = config.n;
 LE_trails = config.trails;
-disp(LE_trails)
+% disp(LE_trails)
 pts = config.pts;
 cons = config.cons;
 consDic = consDicHelper(cons,n);

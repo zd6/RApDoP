@@ -17,7 +17,7 @@ function config = ui
     dlgtitle = 'RApDop Basic Configuration';
     dims = [1 35];
     configChoice = inputdlg(prompt,dlgtitle,dims,definput);
-    disp(str2num(configChoice{2}))
+%     disp(str2num(configChoice{2}))
     configntmp = str2num(configChoice{1});
     configtrailstmp = str2num(configChoice{2});
     
@@ -42,7 +42,7 @@ function config = ui
             end
             answer = inputdlg(prompt,dlgtitle,dims,definput);
             config.pts = [str2num(answer{1});str2num(answer{2})];
-            disp(config.pts)
+%             disp(config.pts)
     end
     config.n = configntmp;
     config.trails = configtrailstmp;
