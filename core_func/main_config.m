@@ -3,6 +3,7 @@ function LE_max = main_config(config)
 
 n = config.n;
 LE_trails = config.trails;
+disp(LE_trails)
 pts = config.pts;
 cons = config.cons;
 consDic = consDicHelper(cons,n);
@@ -43,7 +44,7 @@ D = parallel.pool.DataQueue;
 global h
 h= waitbar(0, 'Please wait ...', 'Name', sprintf('%d-dispersion in progress',n));
 global N p r_prev
-N= LE_trails + min(5, LE_trails);% min(max(10,ceil(n/s)^0.5), 20)*20;
+N= LE_trails + min(max(ceil(LE_trails/100),10),LE_trails);% min(max(10,ceil(n/s)^0.5), 20)*20;
 p = 1; r_prev = 0;
 afterEach(D, @nUpdateWaitbar);
 
@@ -59,8 +60,8 @@ end
 [~,sorted_idx] = sort(LE_r_store, 'descend');
 LE_max = LE_store(sorted_idx(1));
 
-% Further attempts to maximize radium by changing mu
-parfor i =  1:min(5, LE_trails)
+% Further attempts to maximize radium by changing mu ratios
+parfor i =  1:min(max(ceil(LE_trails/100),10),LE_trails)
     max_idx = sorted_idx(i);
     LE_max_tmp = LE_store(max_idx);
     try_max(i) = Loosing_expansion_go(xt, yt, LE_max_tmp, n, isConvex, cons, consDic);

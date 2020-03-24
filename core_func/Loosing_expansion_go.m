@@ -26,20 +26,21 @@ for ratio = ratio_list
     rep.muP = ratio*10000;
 %     fprintf('muB/muC: %d\n', rep.muB/rep.muC)
     ite = n+150;
-    stp = 0.1;
+    stp = 0.01;
     i = 1;
     curmax = -1;
     xc = LE_max.xc;
     yc = LE_max.yc;
     while i < ite
         [r,CtCVec,CtBVec,CC,CB] = GetStateGeometry(xc,yc,xt,yt,n,s,isConvex,(r_prev), isempty(cons));
-
-        r_prev = r;
         Csum = GetRepulsionForce(n,CtCVec,CtBVec,CC,CB,r,rep);
 %         GeneratePlotsWithForce( n, xt , yt , xc , yc , r, Csum,cons)
-        if n^3*var(r_prev) > r^2 && ite < 100*n
+        if r > r_prev && ite < 50*n
             ite = ite + 1;
+        else
+            stp = max(stp*0.95, 0.0001);
         end
+        r_prev = r;
         if r > curmax
             curmax = r;
         end
