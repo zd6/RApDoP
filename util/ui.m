@@ -18,8 +18,8 @@ function config = ui
     dims = [1 35];
     configChoice = inputdlg(prompt,dlgtitle,dims,definput);
     disp(str2num(configChoice{2}))
-    config.n = str2num(configChoice{1});
-    config.trails = str2num(configChoice{2});
+    configntmp = str2num(configChoice{1});
+    configtrailstmp = str2num(configChoice{2});
     
     answer = questdlg('Would you like to draw a polygon w/ mouse or use .csv file?',...
                       'Getting start with a polygon',...
@@ -33,8 +33,10 @@ function config = ui
             dlgtitle = 'Polygon vertice';
             dims = [1 50];
             if isfile('last_config.mat')
-                load('last_config.mat',config)
-                definput = {str(config.pts(1)),str(config.pts(2))};
+                load('last_config.mat','config')
+                definput1 = mat2str(config.pts(1,:));
+                definput2 = mat2str(config.pts(2,:));
+                definput = {definput1(2:end-1),definput2(2:end-1)};
             else
                 definput = {'0 1 1 0','0 0 1 1'};
             end
@@ -42,4 +44,6 @@ function config = ui
             config.pts = [str2num(answer{1});str2num(answer{2})];
             disp(config.pts)
     end
+    config.n = configntmp;
+    config.trails = configtrailstmp;
 end
