@@ -1,7 +1,7 @@
 function consDic = consDicHelper(cons, n)
 consDic = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 if ~isempty(cons)
-    for i = unique(cons(:,1:2))'
+    for i = unique(reshape(cons(:,1:2).',1,[]))
         consDic(i) = [];
         if i > n
             error('Constrains on non-existing circles')

@@ -1,4 +1,5 @@
 function GeneratePlots( n, xt , yt , xcoord , ycoord , r , cons, fig_c)
+
 figure(fig_c)
 %pause(0.2)
 hold off
@@ -13,8 +14,8 @@ hold on
 
 for j = 1:n
     [xc, yc] = circle([xcoord(j)  ycoord(j)], r , 1000);
-    plot(xc, yc)
-    plot(xcoord(j),ycoord(j),'r*')
+    plot(xc, yc, 'k')
+    plot(xcoord(j),ycoord(j),'k.')
     hold on
 end
 if ~isempty(cons)
