@@ -12,4 +12,4 @@ Once you have downloaded the code, you will see a RApDop.m file at primary direc
 The returned x and y coordinates will be given in file max.mat's max.xc and max.yc variables, a figure will show the best circle packing we found and max radius will be printed in the command line and figure. 
 ## Disclaimer
 This computational method doesn't solve the non-convex optimization non linear function so the result will be almost always sub-optimal.
-All the files in this directory is created by Gary and Kathleen, except for an utility function /util/lineSegmentIntersect.m which calculate line segment intersections. It was adapted from U. Murat Erdem's code published at MathWorks File exchange website: https://www.mathworks.com/matlabcentral/fileexchange/27205-fast-line-segment-intersection. 
+All the files in this directory is created by Gary and Kathleen, except for an utility function /util/lineSegmentIntersect.m which calculates line-segments intersections. It was adapted from U. Murat Erdem's code published at MathWorks File exchange website: https://www.mathworks.com/matlabcentral/fileexchange/27205-fast-line-segment-intersection. 
