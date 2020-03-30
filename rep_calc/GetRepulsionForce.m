@@ -18,7 +18,7 @@ for i = 1:n
         if CB(i,j) > 0 && CB(i,j) < 4*r
             CtB(i,j,:) = muB/(max(CB(i,j)-1*r, thr))^2*CtBVec(i,j,:);
             Csum(i,:) = Csum(i,:) + reshape(CtB(i,j,:),[1,2]);
-        elseif CB(i,j) < 0 && CB(i,j) < 4*r
+        elseif CB(i,j) < 0 && -CB(i,j) < 4*r
             CtB(i,j,:) = muP/(max(-CB(i,j)-1*r, thr))^2*CtBVec(i,j,:);
             Csum(i,:) = Csum(i,:) + reshape(CtB(i,j,:),[1,2]);
         end

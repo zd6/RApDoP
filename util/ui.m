@@ -27,7 +27,7 @@ function config = ui
     
     switch answer
         case 'Draw by mouse'    
-            config.pts = drawPoints;
+            configptstmp = drawPoints;
         case 'Type in numbers'
             prompt = {'Polygon vertice x Coords(numbers seperated by space):', 'Polygon Vertice y Coords(numbers seperated by space):'};
             dlgtitle = 'Polygon vertice';
@@ -41,7 +41,7 @@ function config = ui
                 definput = {'0 1 1 0','0 0 1 1'};
             end
             answer = inputdlg(prompt,dlgtitle,dims,definput);
-            config.pts = [str2num(answer{1});str2num(answer{2})];
+            configptstmp = [str2num(answer{1});str2num(answer{2})];
 %             disp(config.pts)
     end
     
@@ -68,4 +68,5 @@ function config = ui
     config.n = configntmp;
     config.trails = configtrailstmp;
     config.cons = configconstmp;
+    config.pts = configptstmp;
 end

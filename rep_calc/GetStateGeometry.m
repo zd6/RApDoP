@@ -62,17 +62,17 @@ else
                     end
                     CtBVec(i,j,:) = tmp(1:2)/norm(tmp);
                 case 2
-                    perpendicular = pV1+(pV2-pV1)*dot(pC-pV1, pV2-pV1)/norm(pV2-pV1);
-                    PB_connection = lineSegmentIntersect([pC(1:2) perpendicular(1:2)], shape);
+%                     perpendicular = pV1+(pV2-pV1)*dot(pC-pV1, pV2-pV1)/norm(pV2-pV1);
+%                     PB_connection = lineSegmentIntersect([pC(1:2) perpendicular(1:2)], shape);
                     CB(i,j) = norm(cross(pC-pV1,pV2-pV1))/norm(pV2-pV1);
                     % disp(sum(PB_connection.intAdjacencyMatrix))
-                    if sum(PB_connection.intAdjacencyMatrix) > 2
-                        continue
-                    end
+%                     if sum(PB_connection.intAdjacencyMatrix) > 2
+%                         continue
+%                     end
                     c = [xt(j+1)-xt(j),yt(j+1)-yt(j)];
                     CtBVec(i,j,:) = [-c(2),c(1)]/norm(c);
                 case 3
-                    PC_connection = lineSegmentIntersect([pC(1:2) pV1(1:2)],shape);
+                    PC_connection = lineSegmentIntersect([pC(1:2) pV2(1:2)],shape);
                     tmp = pC-pV2;
                     CB(i,j) = -norm(tmp);
                     if sum(PC_connection.intAdjacencyMatrix) > 2
