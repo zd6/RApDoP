@@ -2,7 +2,7 @@
 
 ### Authors: Zhengguan Dai (Gary), Kathleen Xu, Melkior Ornik
 
-#### Environment Requirements
+## Environment Requirements
 MATLAB2018b or later; use of MATLAB Parallel Computing Toolbox will save time.
 
 ## Motivation
