@@ -1,4 +1,4 @@
-# RApDoP Repulsion-BAsed p-Dispersion Of Polygons
+# RApDoP: Repulsive Approach to p-Dispersion Of Polygons
 
 ### Authors: Zhengguan Dai (Gary), Kathleen Xu, Melkior Ornik
 
