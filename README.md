@@ -1,4 +1,4 @@
-# RApDoP: Repulsively Approaching p-Dispersion of Polygons
+# RApDoP: Repulsive Approach to p-Dispersion on Polygons
 
 ### Authors: Zhengguan Dai (Gary), Kathleen Xu, Melkior Ornik
 
@@ -6,7 +6,7 @@
 MATLAB2018b or later; use of MATLAB Parallel Computing Toolbox will save time.
 
 ## Motivation
-The p-dispersion problem seeks to place a fixed number of equally sized non-overlapping circles of maximal possible radius into a subset of the two-dimensional plane. This code is the implementation of a repulsion=based p-dispersion algorithm, also able to handle hard bounds on distances between particular circles. 
+The p-dispersion problem seeks to place a fixed number of equally sized non-overlapping circles of maximal possible radius into a subset of the two-dimensional plane. This code is the implementation of a repulsion-based p-dispersion algorithm, also able to handle hard bounds on distances between particular circles. 
 ## Functionality
 Given a convex or non-convex simple polygon, number of circles p, and distance bounds on circle centers, the code will produce a suboptimal solution to the p-dispersal problem, where all circles are entirely within the polygon and given constraints are satisfied.
 ## Running Instruction
