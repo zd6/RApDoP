@@ -29,20 +29,20 @@ for i = 1:n
 end
 CtBVec = zeros(n,s,2);
 CB = zeros(n,s);
-if isConvex
-    for i = 1:n
-        for j = 1:s
-            if r_prev > 0 && CB(i,j) > r_prev*4
-                CB(i,j) = inf;
-                    continue
-            end
-            a = [xc(i)-xt(j),yc(i)-yt(j)];
-            c = [xt(j+1)-xt(j),yt(j+1)-yt(j)];
-            CB(i,j) = norm(cross([a 0],[c 0]))/norm(c); 
-            CtBVec(i,j,:) = [-c(2),c(1)]/norm(c);
-        end
-    end
-else
+% if isConvex
+%     for i = 1:n
+%         for j = 1:s
+%             if r_prev > 0 && CB(i,j) > r_prev*4
+%                 CB(i,j) = inf;
+%                     continue
+%             end
+%             a = [xc(i)-xt(j),yc(i)-yt(j)];
+%             c = [xt(j+1)-xt(j),yt(j+1)-yt(j)];
+%             CB(i,j) = norm(cross([a 0],[c 0]))/norm(c); 
+%             CtBVec(i,j,:) = [-c(2),c(1)]/norm(c);
+%         end
+%     end
+% else
     for i = 1:n
         for j = 1:s
             if r_prev > 0 && CB(i,j) > r_prev*4
@@ -84,7 +84,7 @@ else
             end
         end
     end
-end
+% end
 tmp = abs(reshape([CC/2,CB],1,[]));
 r = min(tmp);
 end

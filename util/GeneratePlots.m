@@ -9,7 +9,7 @@ bufferx = 0.1*(max(xt)-min(xt));
 buffery = 0.1*(max(yt)-min(yt));
 xlim([min(xt)-bufferx,max(xt)+bufferx])
 ylim([min(yt)-buffery,max(yt)+buffery])
-% text(min(xt)-0.5*bufferx,min(yt)-0.5*buffery,strcat('r=',num2str(r)))
+text(min(xt)-0.5*bufferx,min(yt)-0.5*buffery,strcat('r=',num2str(r)))
 hold on
 
 for j = 1:n
@@ -27,5 +27,5 @@ if ~isempty(cons)
         drawnow
     end
 end
-% title(sprintf('%d Circle(s) Packing/ %d-dispersion in Polygon',n, n))
+title(sprintf('%d Circle(s) Packing/ %d-dispersion in Polygon',n, n))
 end
