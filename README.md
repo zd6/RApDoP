@@ -1,15 +1,18 @@
-# Operational Optimization research: RApDoP
-Repulsion-Based Applied p-dispersion with Distance-Constraints of non-/convex Polygon
-### Authors: Zhengguan Dai(Gary), Kathleen Xu, Melkior Ornik
-#### requirement
-MATLAB2018 or later; Save time by using MATLAB Parallel Computing Toolbox.
+# RApDoP Repulsion-BAsed p-Dispersion Of Polygons
+
+### Authors: Zhengguan Dai (Gary), Kathleen Xu, Melkior Ornik
+
+#### Environment Requirements
+MATLAB2018b or later; use of MATLAB Parallel Computing Toolbox will save time.
+
 ## Motivation
-Motivated by the question of optimal facility placement, a classical variant of the p-dispersion problem seeks to place a fixed number of equally sized non-overlapping circles of maximal possible radius into a subset of the two-dimensional Euclidean space. This code is the implmentation of a repulsion based p-dispersion algorithm. 
+The p-dispersion problem seeks to place a fixed number of equally sized non-overlapping circles of maximal possible radius into a subset of the two-dimensional plane. This code is the implementation of a repulsion based p-dispersion algorithm, also able to handle hard bounds on distances between particular circles. 
 ## Functionality
-Given a convex or non-convex simple (no side intersection) polygon, number of circles p, and distance contraints(upper and/or lower bound) on circle centers, the code will produce a sub-optimal maximizer of which maximize the circle radius of all circles given: all cirles share the same radius; all circles are not intersecting each other,; all circles are in the polygon, no circle overlap the boundary, and given constraints are satisfied.
+Given a convex or non-convex simple polygon, number of circles p, and distance bounds on circle centers, the code will produce a suboptimal solution to the p-dispersal problem, where all circles are entirely within the polygon and given constraints are satisfied.
 ## Running Instruction
-Once you have downloaded the code, you will see a RApDop.m file at primary directory. This is an access point to the program. You have to run this file before digging into futher codes (if you wish to, of course). As you run the program, you would be prompt to configure your circle packing, please be ready to input the number of circles, the random starting point trails you would like to try, and the vertex of the polygon. If you had previously run the program, you have the option tp rerun the previous configuration without input anything.At the end of the prompts, you will be asked to put constrains on specified circles, the input should be in format of MATLAB array with first two columns inidicating the circles you would like to put contrains on (index start with 1 and max at circle numbers you want to put in the polygon), and the last two columns indicating the the upper and lower bound of the distance between the circle centers you give in the same row's first tow columns.
-The returned x and y coordinates will be given in file max.mat's max.xc and max.yc variables, a figure will show the best circle packing we found and max radius will be printed in the command line and figure. 
-## Disclaimer
-This computational method doesn't solve the non-convex optimization non linear function so the result will be almost always sub-optimal.
-All the files in this directory is created by Gary and Kathleen, except for an utility function /util/lineSegmentIntersect.m which calculates line-segments intersections. It was adapted from U. Murat Erdem's code published at MathWorks File exchange website: https://www.mathworks.com/matlabcentral/fileexchange/27205-fast-line-segment-intersection. 
+After downloading the code, run RApDop.m. You will be prompted to configure your dispersion problem: please the number of circles, the number of random initial sets of circle centers you would like to attempt, and the vertices of the polygon. If you previously ran the tool, you will have the option to rerun the previous configuration without making new inputs. You will also be able to place hard bounds on circle distances.
+
+After completing the algorithm, the x and y coordinates of the best circle centers will be given in max.xc and max.yc variables of max.mat. A figure will show the best dispersion found, and the resulting radius will be printed in the command line and on the figure.
+
+## Acknowledgment
+Utility function /util/lineSegmentIntersect.m which calculates line-segments intersections was adapted from U. Murat Erdem's code published at MathWorks File Exchange: https://www.mathworks.com/matlabcentral/fileexchange/27205-fast-line-segment-intersection. All other files in this directory were created by the authors.
