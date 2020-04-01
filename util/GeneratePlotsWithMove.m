@@ -1,4 +1,4 @@
-function GeneratePlotsWithMove( n, xt , yt , xcoord , ycoord , r , move, cons)
+unction GeneratePlotsWithMove( n, xt , yt , xcoord , ycoord , r , move, cons)
 figure(1)
 %pause(0.2)
 hold off

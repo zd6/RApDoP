@@ -27,5 +27,5 @@ if ~isempty(cons)
         drawnow
     end
 end
-title(sprintf('%d Circle(s) Packing/ %d-dispersion in Polygon',n, n))
+title(sprintf('%d-Dispersion Results', n))
 end

@@ -4,7 +4,7 @@ if ~isempty(cons)
     for i = unique(reshape(cons(:,1:2).',1,[]))
         consDic(i) = [];
         if i > n
-            error('Constrains on non-existing circles')
+            error('Constraints on nonexistent circles!')
         end
     end
     for i = 1:length(cons(:,1))

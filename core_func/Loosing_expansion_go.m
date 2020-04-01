@@ -81,7 +81,7 @@ for ratio = ratio_list
         xc = xc + move(:,1);
         yc = yc + move(:,2);
         if ~checkCons(cons, xc, yc)
-            disp('boundary about to brokern')
+            disp('boundary about to be brokern')
             return
         end
 

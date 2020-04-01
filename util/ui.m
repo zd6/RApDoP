@@ -1,7 +1,7 @@
 function config = ui
     if isfile('last_config.mat')
         load('last_config.mat', 'config')
-        useLastConfig = questdlg(sprintf('Would you like to use last configuration? Circle: %d, Trails: %d. Constains:%s', config.n, config.trails, mat2str(config.cons)),...
+        useLastConfig = questdlg(sprintf('Would you like to use the last configuration? Number of circles: %d, Number of trials: %d, Constraints: %s', config.n, config.trails, mat2str(config.cons)),...
               'Detected a recent configuration file',...
               'Yes', 'No','Yes');
         switch useLastConfig
@@ -13,23 +13,23 @@ function config = ui
     else
         definput = {'1','50'};
     end
-    prompt = {'How many cirles?:','How many initialization random trails?'};
-    dlgtitle = 'RApDop Basic Configuration';
+    prompt = {'How many circles?:','How many trials (random initial sets)?'};
+    dlgtitle = 'RApDoP Basic Configuration';
     dims = [1 35];
     configChoice = inputdlg(prompt,dlgtitle,dims,definput);
 %     disp(str2num(configChoice{2}))
     configntmp = str2num(configChoice{1});
     configtrailstmp = str2num(configChoice{2});
     
-    answer = questdlg('Would you like to draw a polygon w/ mouse or type in coordinates?',...
-                      'Getting start with a polygon',...
-                      'Draw by mouse', 'Type in numbers','Draw by mouse');
+    answer = questdlg('Would you like to draw a polygon by mouse or type in coordinates?',...
+                      'Getting started with the polygon',...
+                      'Draw by mouse', 'Type in coordinates','Draw by mouse');
     
     switch answer
         case 'Draw by mouse'    
             configptstmp = drawPoints;
         case 'Type in numbers'
-            prompt = {'Polygon vertice x Coords(numbers seperated by space):', 'Polygon Vertice y Coords(numbers seperated by space):'};
+            prompt = {'x coordinates of vertices (separated by spaces):', 'y coordinates of vertices (separated by spaces):'};
             dlgtitle = 'Polygon vertice';
             dims = [1 50];
             if isfile('last_config.mat')
@@ -45,15 +45,15 @@ function config = ui
 %             disp(config.pts)
     end
     
-    answer = questdlg('Would you want any hard distance constrains on circles?',...
+    answer = questdlg('Are there any hard distance bounds on circle centers?',...
                   'Constraints',...
-                  'No constraints', 'Yes, put constriants', 'No constraints');
+                  'No', 'Yes', 'No');
     switch answer
         case 'No constraints'
             configconstmp = [];
         case 'Yes, put constriants'
-            prompt = {'Input Constrains as matrix as in [circle1(index) circle2(index) distance(lower bound) distance(upper bound)], eg.:[1 2 3 4] will limit the center distance between circle 1 and 2 within 3 to 4'};
-            dlgtitle = 'Polygon vertice';
+            prompt = {'Write bounds in the form of [circle1(index) circle2(index) distance(lower bound) distance(upper bound)]; e.g., [1 2 3 4] will limit the distance between centers of circles 1 and 2 to between 3 and 4.'};
+            dlgtitle = 'Polygon vertices';
             dims = [5 50];
             if isfile('last_config.mat')
                 load('last_config.mat','config')

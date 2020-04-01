@@ -49,24 +49,43 @@ p = 1; r_prev = 0;
 afterEach(D, @nUpdateWaitbar);
 
 % Loosing Expansion trails to get optimal circle placing
-parfor i = 1:LE_trails
+if license('test','Distrib_Computing_Toolbox')
+    parfor i = 1:LE_trails
     LE_store(i) = Loosing_expansion(xt, yt, n, isConvex, cons, consDic);
     maxr = (max(LE_store(i).r));
     LE_r_store(i) = LE_store(i).r;
     send(D, maxr);
+    end
+else
+    for i = 1:LE_trails
+        LE_store(i) = Loosing_expansion(xt, yt, n, isConvex, cons, consDic);
+        maxr = (max(LE_store(i).r));
+        LE_r_store(i) = LE_store(i).r;
+        send(D, maxr);
+    end
 end
-
 
 [~,sorted_idx] = sort(LE_r_store, 'descend');
 LE_max = LE_store(sorted_idx(1));
 
 % Further attempts to maximize radium by changing mu ratios
-parfor i =  1:min(max(ceil(LE_trails/100),10),LE_trails)
-    max_idx = sorted_idx(i);
-    LE_max_tmp = LE_store(max_idx);
-    try_max(i) = Loosing_expansion_go(xt, yt, LE_max_tmp, n, isConvex, cons, consDic);
-    try_r(i) = try_max(i).r;
-    send(D, try_r(i));
+if license('test','Distrib_Computing_Toolbox')
+    parfor i =  1:min(max(ceil(LE_trails/100),10),LE_trails)
+        max_idx = sorted_idx(i);
+        LE_max_tmp = LE_store(max_idx);
+        try_max(i) = Loosing_expansion_go(xt, yt, LE_max_tmp, n, isConvex, cons, consDic);
+        try_r(i) = try_max(i).r;
+        send(D, try_r(i));
+    end
+else
+    for i =  1:min(max(ceil(LE_trails/100),10),LE_trails)
+        max_idx = sorted_idx(i);
+        LE_max_tmp = LE_store(max_idx);
+        try_max(i) = Loosing_expansion_go(xt, yt, LE_max_tmp, n, isConvex, cons, consDic);
+        try_r(i) = try_max(i).r;
+        send(D, try_r(i));
+    end
+
 end
 [~,try_idx] = sort(try_r, 'descend');
 if try_r(try_idx(1)) > LE_max.r

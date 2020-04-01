@@ -12,7 +12,7 @@ while ~checkCons(cons, xc, yc)% && tries < 100
         max_param.r = -1;
         max_param.xc = zeros(1,n);
         max_param.yc = zeros(1,n);
-        disp('failed to find possible initialization')
+        disp('Failed to find a possible initialization!')
         return
     end
     [xc,yc] = GetPointsInside(n, xt, yt);
@@ -81,7 +81,7 @@ while i < ite
     xc = xc + move(:,1);
     yc = yc + move(:,2);
     if ~checkCons(cons, xc, yc)
-        disp('boundary about to brokern')
+        disp('boundary about to be brokern')
         return
     end
     i = i + 1;
