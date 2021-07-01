@@ -28,7 +28,8 @@ function config = ui
     switch answer
         case 'Draw by mouse'    
             configptstmp = drawPoints;
-        case 'Type in numbers'
+        case 'Type in coordinates'
+            disp('prompting type')
             prompt = {'x coordinates of vertices (separated by spaces):', 'y coordinates of vertices (separated by spaces):'};
             dlgtitle = 'Polygon vertice';
             dims = [1 50];
@@ -40,8 +41,8 @@ function config = ui
             else
                 definput = {'0 1 1 0','0 0 1 1'};
             end
-            answer = inputdlg(prompt,dlgtitle,dims,definput);
-            configptstmp = [str2num(answer{1});str2num(answer{2})];
+            cur_ans = inputdlg(prompt,dlgtitle,dims,definput);
+            configptstmp = [str2num(cur_ans{1});str2num(cur_ans{2})];
 %             disp(config.pts)
     end
     
@@ -49,9 +50,9 @@ function config = ui
                   'Constraints',...
                   'No', 'Yes', 'No');
     switch answer
-        case 'No constraints'
+        case 'No'
             configconstmp = [];
-        case 'Yes, put constriants'
+        case 'Yes'
             prompt = {'Write bounds in the form of [circle1(index) circle2(index) distance(lower bound) distance(upper bound)]; e.g., [1 2 3 4] will limit the distance between centers of circles 1 and 2 to between 3 and 4.'};
             dlgtitle = 'Polygon vertices';
             dims = [5 50];

@@ -15,9 +15,9 @@ max_data.trails = [];
 save('last_config.mat', 'config')
 save('max.mat','max_data')
 fig_count = 1;
-LE_max = main_config(config);
+[LE_max, ~, ~] = main_config(config);
 figure(fig_count)
 GeneratePlots(config.n, LE_max.xt, LE_max.yt, LE_max.xc, LE_max.yc, LE_max.r, config.cons, fig_count);
 fig_count = fig_count + 1;
-load('max.mat','max_data')
+% load('max.mat','mhistax_data')
 disp(max_data.r)

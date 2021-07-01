@@ -19,13 +19,20 @@ for j = 1:n
     hold on
 end
 if ~isempty(cons)
+    h = zeros(1, length(cons(:,1)));
     for i = 1:length(cons(:,1))
         con = cons(i,:);
-        plot([xcoord(con(1)), xcoord(con(2))], [ycoord(con(1)), ycoord(con(2))])
-        text((xcoord(con(1))+xcoord(con(2)))/2,(ycoord(con(1))+ycoord(con(2)))/2,...
-            {'\leftarrow', sprintf('%.2f<= %.2f <=%.2f',con(3),norm([xcoord(con(1))-xcoord(con(2)), ycoord(con(1))-ycoord(con(2))]),con(4))})
+        h(i) = plot([xcoord(con(1)), xcoord(con(2))], [ycoord(con(1)), ycoord(con(2))], 'LineWidth', 2,...
+            'DisplayName',sprintf('%.2f<= %.2f <=%.2f',...
+            con(3),...
+            norm([xcoord(con(1))-xcoord(con(2)), ycoord(con(1))-ycoord(con(2))]),...
+            con(4)));
+%         text((xcoord(con(1))+xcoord(con(2)))/2+0.5,(ycoord(con(1))+ycoord(con(2)))/2,...
+%             {'\leftarrow', sprintf('%.2f<= %.2f <=%.2f',con(3),norm([xcoord(con(1))-xcoord(con(2)), ycoord(con(1))-ycoord(con(2))]),con(4))})
         drawnow
     end
+    legend(h)
 end
+
 title(sprintf('%d-Dispersion Results', n))
 end

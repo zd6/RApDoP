@@ -1,4 +1,4 @@
-function LE_max = main_config(config)
+function [LE_max, LE_store_r, try_r] = main_config(config)
 % clear;close all
 
 n = config.n;
@@ -41,10 +41,11 @@ LE_r_store = zeros(1,LE_trails);
 
 % WaitBar initialization
 D = parallel.pool.DataQueue;
+MIN_TUNE = 20;
 global h
 h= waitbar(0, 'Please wait ...', 'Name', sprintf('%d-dispersion in progress',n));
 global N p r_prev
-N= LE_trails + min(max(ceil(LE_trails/100),10),LE_trails);% min(max(10,ceil(n/s)^0.5), 20)*20;
+N= LE_trails + min(max(ceil(LE_trails/100),MIN_TUNE),LE_trails);% min(max(10,ceil(n/s)^0.5), 20)*20;
 p = 1; r_prev = 0;
 afterEach(D, @nUpdateWaitbar);
 
@@ -67,10 +68,10 @@ end
 
 [~,sorted_idx] = sort(LE_r_store, 'descend');
 LE_max = LE_store(sorted_idx(1));
-
+LE_store_r = [LE_store.r];
 % Further attempts to maximize radium by changing mu ratios
 if license('test','Distrib_Computing_Toolbox')
-    parfor i =  1:min(max(ceil(LE_trails/100),10),LE_trails)
+    parfor i =  1:min(max(ceil(LE_trails/100),MIN_TUNE),LE_trails)
         max_idx = sorted_idx(i);
         LE_max_tmp = LE_store(max_idx);
         try_max(i) = Loosing_expansion_go(xt, yt, LE_max_tmp, n, isConvex, cons, consDic);
@@ -78,7 +79,7 @@ if license('test','Distrib_Computing_Toolbox')
         send(D, try_r(i));
     end
 else
-    for i =  1:min(max(ceil(LE_trails/100),10),LE_trails)
+    for i =  1:min(max(ceil(LE_trails/100),MIN_TUNE),LE_trails)
         max_idx = sorted_idx(i);
         LE_max_tmp = LE_store(max_idx);
         try_max(i) = Loosing_expansion_go(xt, yt, LE_max_tmp, n, isConvex, cons, consDic);
@@ -87,6 +88,7 @@ else
     end
 
 end
+% save(sprintf('tuned_history_%d', n), 'try_r')
 [~,try_idx] = sort(try_r, 'descend');
 if try_r(try_idx(1)) > LE_max.r
     LE_max = try_max(try_idx(1));
