@@ -3,7 +3,13 @@
 ### Authors: Zhengguan Dai (Gary), Kathleen Xu, Melkior Ornik
 
 ## Environment Requirements
-MATLAB2018b or later; use of MATLAB Parallel Computing Toolbox will save time.
+MATLAB2018b or later;
+# Required toolboxes:
+Image Processing Toolbox, Mapping Toolbox
+# Recommended toolboxes:
+Parallel Computing Toolbox
+# Test Scripts toolboxes:
+Curve Fitting Toolbox
 
 ## Overview
 The p-dispersion problem seeks to place a fixed number of equally sized non-overlapping circles of maximal possible radius into a subset of the two-dimensional plane. This code is the implementation of a repulsion-based p-dispersion algorithm, also able to handle hard bounds on distances between particular circles. 
